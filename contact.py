@@ -1,7 +1,7 @@
 class Contact:
-    def __init__(self, abon_first_name, abon_middle_name, abon_last_name, abon_nikname, \
-                 company, address, title, \
-                 phone_home, phone_mobile, phone_work, phone_fax, \
+    def __init__(self, abon_first_name, abon_middle_name, abon_last_name, abon_nikname,
+                 company, address, title,
+                 phone_home, phone_mobile, phone_work, phone_fax,
                  email, email2, email3, homepage):
 
         self.abon_first_name = abon_first_name
