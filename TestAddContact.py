@@ -54,17 +54,6 @@ class TestAddContact(unittest.TestCase):
                                         email3="test3@mail.com",
                                         homepage="http://localhost"))
 
-        wd.find_element_by_name("bday").click()
-        Select(wd.find_element_by_name("bday")).select_by_visible_text("8")
-        wd.find_element_by_xpath("//option[@value='8']").click()
-        wd.find_element_by_name("bmonth").click()
-        Select(wd.find_element_by_name("bmonth")).select_by_visible_text("December")
-        wd.find_element_by_xpath("//option[@value='December']").click()
-        wd.find_element_by_name("byear").click()
-        wd.find_element_by_name("byear").clear()
-        wd.find_element_by_name("byear").send_keys("1872")
-        wd.find_element_by_name("theform").click()
-
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         wd.find_element_by_id("logo").click()
 
