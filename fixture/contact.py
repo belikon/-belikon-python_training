@@ -6,7 +6,7 @@ class ContactHelper:
 
 
     def create(self, contact):
-    # Add_Contact.py
+    # Test_Add_Contact.py
         wd = self.app.wd
         #open add new contact page
         wd.find_element_by_link_text("add new").click()

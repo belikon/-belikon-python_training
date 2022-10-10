@@ -1,5 +1,3 @@
-
-
 class SessionHelper:
 
     def __init__(self, app):
@@ -17,7 +15,7 @@ class SessionHelper:
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_id("LoginForm").submit()
 
-    def logout(self):
+    def Logout(self):
         wd = self.app.wd
-        # logout
         wd.find_element_by_link_text("Logout").click()
+        wd.find_element_by_name("user")
