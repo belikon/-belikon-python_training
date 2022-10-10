@@ -1,31 +1,18 @@
 from selenium import webdriver
+from fixture.session import SessionHelper
 
 class Application:
 
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
 #    def setUp(self):
 #        self.wd = webdriver.Firefox()
 #        self.wd.implicitly_wait(30)
 
-    def Login(self, username, password):
-        wd = self.wd
-        # open URL
-        wd.get("http://localhost/addressbook/")
-        # login+password
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_id("LoginForm").submit()
 
-    def logout(self):
-        wd = self.wd
-        # logout
-        wd.find_element_by_link_text("Logout").click()
 
     def create_group(self, group):
         wd = self.wd
