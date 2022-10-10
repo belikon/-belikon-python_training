@@ -11,8 +11,8 @@ def app(request):
     return fixture
 
 def test_add_conctact(app):
-    app.Login(username="admin", password="secret")
-    app.create_abon_add_abon_info(Contact(
+    app.session.Login(username="admin", password="secret")
+    app.contact.create(Contact(
     #add info FIO and nikname
                                    abon_first_name="Petr",
                                    abon_middle_name="Ivanov",
@@ -33,4 +33,4 @@ def test_add_conctact(app):
                                     email3="test3@mail.com",
                                     homepage="http://localhost"))
 
-    app.logout()
+    app.session.logout()
