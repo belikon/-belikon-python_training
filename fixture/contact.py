@@ -6,7 +6,7 @@ class ContactHelper:
 
 
     def create(self, contact):
-    # test_add_contact.py
+        # test_add_contact.py
         wd = self.app.wd
         #open add new contact page
         wd.find_element_by_link_text("add new").click()
@@ -71,7 +71,7 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
-        #edit
+        # edit
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.abon_first_name)
@@ -91,7 +91,7 @@ class ContactHelper:
         wd.find_element_by_name("address").click()
         wd.find_element_by_name("address").clear()
         wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("theform").click()
+        # wd.find_element_by_name("theform").click()
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
         wd.find_element_by_name("title").send_keys(contact.title)
@@ -121,3 +121,37 @@ class ContactHelper:
         wd.find_element_by_name("homepage").send_keys(contact.homepage)
         # Update
         wd.find_element_by_name("update").click()
+
+    def new_edit_first_contact(self, contact):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        # edit
+        self.fill_contact_form(contact)
+        # Update
+        wd.find_element_by_name("update").click()
+
+    def fill_contact_form(self, contact):
+        wd = self.app.wd
+        self.change_field_value("firstname", contact.abon_first_name)
+        self.change_field_value("middlename", contact.abon_middle_name)
+        self.change_field_value("lastname", contact.abon_last_name)
+        self.change_field_value("nickname", contact.abon_nikname)
+        self.change_field_value("company", contact.company)
+        self.change_field_value("address", contact.address)
+        self.change_field_value("title", contact.title)
+        self.change_field_value("home", contact.phone_home)
+        self.change_field_value("mobile", contact.phone_mobile)
+        self.change_field_value("work", contact.phone_work)
+        self.change_field_value("fax", contact.phone_fax)
+        self.change_field_value("email", contact.email)
+        self.change_field_value("email2", contact.email2)
+        self.change_field_value("email3", contact.email3)
+        self.change_field_value("homepage", contact.homepage)
+
+    def change_field_value(self, field_name, test):
+        wd = self.app.wd
+        if test is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(test)

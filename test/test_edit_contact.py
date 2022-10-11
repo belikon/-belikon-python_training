@@ -20,3 +20,6 @@ def test_edit_first_contact(app):
                                     email2="test2@m23ail.com",
                                     email3="test3@ .com",
                                     homepage="http:// "))
+
+def test_new_edit_first_contact(app):
+    app.contact.new_edit_first_contact(Contact(abon_first_name="Editort"))
