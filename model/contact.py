@@ -22,3 +22,5 @@ class Contact:
         self.email2 = email2
         self.email3 = email3
         self.homepage = homepage
+
+

@@ -6,7 +6,7 @@ def test_add_conctact(app):
     app.session.Login(username="admin", password="secret")
     app.contact.create(Contact(
     #add info FIO and nikname
-                                   abon_first_name="Petr",
+                                   abon_first_name="Testob",
                                    abon_middle_name="Ivanov",
                                    abon_last_name="Testovich",
                                    abon_nikname="Petrucho",
