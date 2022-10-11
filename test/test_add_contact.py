@@ -3,7 +3,6 @@
 from model.contact import Contact
 
 def test_add_conctact(app):
-    app.session.Login(username="admin", password="secret")
     app.contact.create(Contact(
     #add info FIO and nikname
                                    abon_first_name="Testob",
@@ -25,4 +24,3 @@ def test_add_conctact(app):
                                     email3="test3@mail.com",
                                     homepage="http://localhost"))
 
-    app.session.Logout()
