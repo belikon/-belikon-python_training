@@ -29,4 +29,4 @@ def test_edit_first_contact(app):
                                     homepage="http:// "))
 
 def test_new_edit_first_contact(app):
-    app.contact.new_edit_first_contact(Contact(abon_first_name="Editort"))
+    app.contact.edit_first_contact(Contact(abon_first_name="Editort"))
