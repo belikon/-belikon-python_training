@@ -8,7 +8,7 @@ def test_edit_first_contact(app):
             abon_middle_name="Ivanov",
             abon_last_name="Testovich",
             abon_nikname="Petrucho"))
-    app.contact.test_edit_first_contact(Contact(
+    app.contact.edit_first_contact(Contact(
     #add info FIO and nikname
                                    abon_first_name="Edit",
                                    abon_middle_name="IvanovEditor",

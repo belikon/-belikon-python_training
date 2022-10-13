@@ -7,4 +7,4 @@ def test_delete_first_contact(app):
             abon_middle_name="Ivanov",
             abon_last_name="Testovich",
             abon_nikname="Petrucho"))
-    app.contact.test_delete_first_contact()
+    app.contact.delete_first_contact()

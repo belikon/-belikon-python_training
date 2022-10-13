@@ -14,14 +14,14 @@ class ContactHelper:
         self.fill_contact_form(contact)
         wd.find_element_by_name("submit").click()
 
-    def test_delete_first_contact(self):
+    def delete_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
 
-    def test_edit_first_contact(self, contact):
+    def edit_first_contact(self, contact):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
