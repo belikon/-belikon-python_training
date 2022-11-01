@@ -8,4 +8,4 @@ def test_add_group(app):
 
 def test_add_empty_group(app):
     app.group.create(Group(group_name="1", group_header="2", group_footer="3"))
-
+    app.session.Logout()

@@ -30,7 +30,8 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd
-        # open groups page
+        if (wd.current_url == "http://localhost/addressbook/group.php" and len(wd.find_elements_by_name("new")) > 0):
+            return
         wd.find_element_by_link_text("groups").click()
 
     def delete_first_group(self):
@@ -40,7 +41,7 @@ class GroupHelper:
         self.select_first_group()
         # submit deletion
         wd.find_element_by_name("delete").click()
-        wd.find_element_by_link_text("group page").click()
+        #wd.find_element_by_link_text("group page").click()
 
 
     def test_edit_first_group(self, group):
@@ -51,7 +52,7 @@ class GroupHelper:
         wd.find_element_by_name("edit").click()
         self.fill_group_form(group)
         wd.find_element_by_name("update").click()
-        wd.find_element_by_link_text("group page").click()
+        #wd.find_element_by_link_text("group page").click()
 
     def test_edit_first_group_name(self, new_group_data):
         wd = self.app.wd
@@ -60,7 +61,7 @@ class GroupHelper:
         wd.find_element_by_name("edit").click()
         self.fill_group_form(new_group_data)
         wd.find_element_by_name("update").click()
-        wd.find_element_by_link_text("group page").click()
+        #wd.find_element_by_link_text("group page").click()
 
     def select_first_group(self):
         wd = self.app.wd
