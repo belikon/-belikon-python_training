@@ -8,25 +8,19 @@ def test_edit_first_contact(app):
             abon_middle_name="Ivanov",
             abon_last_name="Testovich",
             abon_nikname="Petrucho"))
-    app.contact.edit_first_contact(Contact(
+    contact = Contact(
     #add info FIO and nikname
-                                   abon_first_name="Edit",
-                                   abon_middle_name="IvanovEditor",
-                                   abon_last_name="Testovich",
-                                   abon_nikname="PetruchoED",
-    #add abonent info company, address and tittle
-                                    company = "GazpromOPN",
-                                    address = "Lubyznka",
-                                    title = " ",
-                                    phone_home=" wer",
-                                    phone_mobile="234 ",
-                                    phone_work="234 ",
-                                    phone_fax="243 ",
-    #add abonent add email and site
-                                    email="test@mail.ru",
-                                    email2="test2@m23ail.com",
-                                    email3="test3@ .com",
-                                    homepage="http:// "))
+                                   abon_first_name="Testob",
+                                   abon_middle_name="Testovich",
+                                   abon_last_name="Ivanov")
+    old_contacts = app.contact.get_contacts_list()
+    contact.id = old_contacts[0].id
+    app.contact.edit_first_contact(contact)
+    new_contacts = app.contact.get_contacts_list()
 
-def test_new_edit_first_contact(app):
-    app.contact.edit_first_contact(Contact(abon_first_name="Editort"))
+    assert len(old_contacts) == len(new_contacts)
+    old_contacts[0] = contact
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+
+
+
