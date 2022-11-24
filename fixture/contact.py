@@ -24,24 +24,45 @@ class ContactHelper:
         wd.find_element_by_name("submit").click()
         self.contact_cache = None
 
-
-    def delete_first_contact(self):
+    def select_contact_by_index(self, index):
         wd = self.app.wd
         self.open_page()
-        wd.find_element_by_link_text("home").click()
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
+    def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
+        wd = self.app.wd
+        self.open_groups_page()
+        # select first group
+        self.select_group_by_index(index)
+        # submit deletion
+        wd.find_element_by_name("delete").click()
+        #wd.find_element_by_link_text("group page").click()
+        self.group_cache = None
+
+    def delete_contact_by_index(self, index):
+        wd = self.app.wd
+        self.open_page()
+        self.select_contact_by_index(index)
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         wd.find_element_by_css_selector("div.msgbox")
         #time.sleep(3)
         #self.open_page()
         self.contact_cache = None
+    def delete_first_contact(self):
+        self.delete_contact_by_index(0)
 
 
     def edit_first_contact(self, contact):
+        self.edit_contact_by_index(0, contact)
+
+    def edit_contact_by_index(self, index, contact):
         wd = self.app.wd
         self.open_page()
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        self.select_contact_by_index(index)
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         # edit
         self.fill_contact_form(contact)
         # Update
