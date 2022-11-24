@@ -22,6 +22,7 @@ class ContactHelper:
         #add new contact
         self.fill_contact_form(contact)
         wd.find_element_by_name("submit").click()
+        self.contact_cache = None
 
 
     def delete_first_contact(self):
@@ -34,6 +35,7 @@ class ContactHelper:
         wd.find_element_by_css_selector("div.msgbox")
         #time.sleep(3)
         #self.open_page()
+        self.contact_cache = None
 
 
     def edit_first_contact(self, contact):
@@ -46,6 +48,7 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.open_page()
         time.sleep(2)
+        self.contact_cache = None
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -77,15 +80,20 @@ class ContactHelper:
         self.open_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+
+    contact_cache = None
+
     def get_contacts_list(self):
-        wd = self.app.wd
-        self.open_page()
-        contacts_list = []
-        for element in wd.find_elements_by_css_selector("tr.odd"):
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            fio_list = list(element.find_elements_by_tag_name("td"))
-            abon_first_name = fio_list[2].text
-            abon_middle_name = fio_list[1].text
-            contacts_list.append(Contact(id = id, abon_first_name = abon_first_name, abon_middle_name = abon_middle_name))
-        #print(contacts)
-        return contacts_list
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_page()
+            self.contact_cache = []
+            #for element in wd.find_elements_by_css_selector("tr.odd"):
+            for element in wd.find_elements_by_name("entry"):
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                fio_list = list(element.find_elements_by_tag_name("td"))
+                abon_first_name = fio_list[2].text
+                abon_middle_name = fio_list[1].text
+                self.contact_cache.append(Contact(id = id, abon_first_name = abon_first_name, abon_middle_name = abon_middle_name))
+            #print(contacts)
+        return list(self.contact_cache)

@@ -10,7 +10,7 @@ def test_edit_first_contact(app):
             abon_nikname="Petrucho"))
     contact = Contact(
     #add info FIO and nikname
-                                   abon_first_name="Testob2",
+                                   abon_first_name="Testob",
                                    abon_middle_name="Testovich")
     old_contacts = app.contact.get_contacts_list()
     contact.id = old_contacts[0].id
