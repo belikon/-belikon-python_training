@@ -8,7 +8,8 @@ class ContactHelper:
 
     def open_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("entry")) > 0):
+        #if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("entry")) > 0):
+        if not wd.current_url == "http://localhost/addressbook/":
             wd.find_element_by_link_text("home").click()
 
 
@@ -21,7 +22,6 @@ class ContactHelper:
         #add new contact
         self.fill_contact_form(contact)
         wd.find_element_by_name("submit").click()
-        time.sleep(2)
 
 
     def delete_first_contact(self):
@@ -31,7 +31,9 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
-        time.sleep(3)
+        wd.find_element_by_css_selector("div.msgbox")
+        #time.sleep(3)
+        #self.open_page()
 
 
     def edit_first_contact(self, contact):
@@ -42,6 +44,8 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # Update
         wd.find_element_by_name("update").click()
+        self.open_page()
+        time.sleep(2)
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -79,7 +83,7 @@ class ContactHelper:
         contacts_list = []
         for element in wd.find_elements_by_css_selector("tr.odd"):
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            fio_list = list(element.find_elements_by_css_selector("td"))
+            fio_list = list(element.find_elements_by_tag_name("td"))
             abon_first_name = fio_list[2].text
             abon_middle_name = fio_list[1].text
             contacts_list.append(Contact(id = id, abon_first_name = abon_first_name, abon_middle_name = abon_middle_name))
