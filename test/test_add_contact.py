@@ -20,7 +20,7 @@ def test_new_add_conctact(app):
                                     phone_home="749522212244",
                                     phone_mobile="79327665211",
                                     phone_work="88002000600",
-                                    phone_fax="none",
+                                    secondaryphone="234523",
     #add abonent add email and site
                                     email="test@mail.com",
                                     email2="test2@mail.com",

@@ -1,5 +1,6 @@
 from model.contact import Contact
 import time
+import re
 
 class ContactHelper:
 
@@ -30,16 +31,6 @@ class ContactHelper:
         wd.find_elements_by_name("selected[]")[index].click()
     def delete_first_group(self):
         self.delete_group_by_index(0)
-
-    def delete_group_by_index(self, index):
-        wd = self.app.wd
-        self.open_groups_page()
-        # select first group
-        self.select_group_by_index(index)
-        # submit deletion
-        wd.find_element_by_name("delete").click()
-        #wd.find_element_by_link_text("group page").click()
-        self.group_cache = None
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
@@ -83,11 +74,13 @@ class ContactHelper:
         self.change_field_value("home", contact.phone_home)
         self.change_field_value("mobile", contact.phone_mobile)
         self.change_field_value("work", contact.phone_work)
-        self.change_field_value("fax", contact.phone_fax)
+        #self.change_field_value("fax", contact.phone_fax)
         self.change_field_value("email", contact.email)
         self.change_field_value("email2", contact.email2)
         self.change_field_value("email3", contact.email3)
         self.change_field_value("homepage", contact.homepage)
+        self.change_field_value("phone2", contact.secondaryphone)
+
 
     def change_field_value(self, field_name, test):
         wd = self.app.wd
@@ -112,9 +105,51 @@ class ContactHelper:
             #for element in wd.find_elements_by_css_selector("tr.odd"):
             for element in wd.find_elements_by_name("entry"):
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                fio_list = list(element.find_elements_by_tag_name("td"))
-                abon_first_name = fio_list[2].text
-                abon_middle_name = fio_list[1].text
-                self.contact_cache.append(Contact(id = id, abon_first_name = abon_first_name, abon_middle_name = abon_middle_name))
+                cells = list(element.find_elements_by_tag_name("td"))
+                #id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                abon_first_name = cells[2].text
+                abon_last_name = cells[1].text
+                abon_address = cells[3].text
+                abon_all_email = cells[4].text
+                all_phones = cells[5].text
+                self.contact_cache.append(Contact(id = id, abon_first_name = abon_first_name, abon_last_name = abon_last_name, all_phones_from_home_page = all_phones,
+                                                  address = abon_address, all_email_from_home_page = abon_all_email))
             #print(contacts)
         return list(self.contact_cache)
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.select_contact_by_index(index)
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
+        abon_first_name = wd.find_element_by_name("firstname").get_attribute("value")
+        abon_last_name = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        phone_home = wd.find_element_by_name("home").get_attribute("value")
+        phone_work = wd.find_element_by_name("work").get_attribute("value")
+        phone_mobile = wd.find_element_by_name("mobile").get_attribute("value")
+        secondaryphone = wd.find_element_by_name("phone2").get_attribute("value")
+        abon_edit_address = wd.find_element_by_name("address").get_attribute("value")
+        abon_edit_email = wd.find_element_by_name("email").get_attribute("value")
+        abon_edit_email2 = wd.find_element_by_name("email2").get_attribute("value")
+        abon_edit_email3 = wd.find_element_by_name("email3").get_attribute("value")
+        secondary_edit_adress = wd.find_element_by_name("address2").get_attribute("value")
+        return Contact(abon_first_name = abon_first_name, abon_last_name = abon_last_name, id = id,
+                       phone_home = phone_home, phone_work = phone_work, phone_mobile = phone_mobile, secondaryphone = secondaryphone,
+                       address = abon_edit_address, email = abon_edit_email, email2 = abon_edit_email2, email3 = abon_edit_email3, secondary_address = secondary_edit_adress)
+
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.open_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("tg")[6]
+        cell.find_element_by_tag_name("a").click()
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_xpath("//img[@alt='Details']")[index].click()
+        text = wd.find_element_by_id("content").text
+        phone_home = re.search("H: (.*)", text).group(1)
+        phone_work = re.search("W: (.*)", text).group(1)
+        phone_mobile = re.search("M: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return Contact(phone_home = phone_home, phone_work = phone_work, phone_mobile = phone_mobile, secondaryphone = secondaryphone)
