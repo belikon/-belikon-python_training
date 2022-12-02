@@ -37,9 +37,7 @@ def test_home_VS_edit_page_contact(app):
 
 def merge_email_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
-                     map(lambda x: clear(x),
-                         filter(lambda x: x is not None,
-                                [contact.email, contact.email2, contact.email3 ]))))
+                     filter(lambda x: x is not None,[contact.email, contact.email2, contact.email3 ])))
 
 
 #self.contact_cache.append(Contact(id = id, abon_first_name = abon_first_name, abon_last_name = abon_last_name, all_phones_from_home_page = all_phones,
