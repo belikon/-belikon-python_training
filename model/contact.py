@@ -35,7 +35,9 @@ class Contact:
         else:
             return maxsize
     def __repr__(self):
-        return "%s:%s:%s" % (self.id, self.abon_first_name, self.abon_last_name)
+        return "%s:%s:%s;%s;%s;%s;%s;%s;%s;%s;%s" % (self.id, self.abon_first_name, self.abon_last_name, self.address, self.phone_home, self.phone_mobile, self.phone_work,
+                             self.secondaryphone, self.email, self.email2, self.email3)
+
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and self.abon_first_name == other.abon_first_name and self.abon_last_name == other.abon_last_name
