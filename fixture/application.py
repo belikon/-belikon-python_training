@@ -14,7 +14,7 @@ class Application:
         elif browser == "ie":
             self.wd = webdriver.Ie()
         elif browser == "opera":
-            self.wd = webdriver.opera()
+            self.wd = webdriver.Opera()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
         self.wd.implicitly_wait(3)
