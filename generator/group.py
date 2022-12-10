@@ -12,7 +12,7 @@ except getopt.GetoptError as err:
     getopt.usage()
     sys.exit(2)
 
-n = 5
+n = 2
 f = "data/groups.json"
 
 for o,a in opts:
@@ -33,7 +33,7 @@ def random_string(prefix, maxlen):
 #    for footer in ["", random_string("footer", 20)]
 #     ]
 
-testdata = [Group(group_name="", group_header="", group_footer="")] + [
+testdata = [
     Group(group_name=random_string("name", 10), group_header=random_string("header", 20), group_footer=random_string("footer", 20))
     for i in range(n)
 ]
