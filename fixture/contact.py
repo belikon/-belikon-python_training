@@ -1,6 +1,7 @@
 from model.contact import Contact
 import time
 import re
+import random
 
 class ContactHelper:
 
@@ -59,7 +60,7 @@ class ContactHelper:
         # Update
         wd.find_element_by_name("update").click()
         self.open_page()
-        time.sleep(2)
+        #time.sleep(2)
         self.contact_cache = None
 
     def fill_contact_form(self, contact):
@@ -153,3 +154,27 @@ class ContactHelper:
         phone_mobile = re.search("M: (.*)", text).group(1)
         secondaryphone = re.search("P: (.*)", text).group(1)
         return Contact(phone_home = phone_home, phone_work = phone_work, phone_mobile = phone_mobile, secondaryphone = secondaryphone)
+
+    def add_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_page()
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("to_group").find_element_by_css_selector("[value='%s']" % group_id)
+        wd.find_element_by_name("add").click()
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_page()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
+    def delete_contact_from_group(self, group_id):
+        wd = self.app.wd
+        self.open_page()
+        wd.find_element_by_name("group").find_element_by_css_selector("[value='%s']" % group_id).click()
+
+        contact_id = random.choice(self.get_contacts_list())
+        wd.find_element_by_css_selector("input[value='%s']" % contact_id.id).click()
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        wd.find_element_by_css_selector("div.msgbox")
