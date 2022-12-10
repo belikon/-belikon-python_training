@@ -1,5 +1,7 @@
-import  re
+import re
 from random import randrange
+from model.contact import Contact
+
 
 def test_phones_on_home_page (app):
     contact_from_homepage = app.contact.get_contacts_list()[0]
@@ -16,7 +18,7 @@ def test_phones_on_contact_view_page(app):
     assert contact_from_view_page.secondaryphone == contact_from_edit_page.secondaryphone
 
 def clear(s):
-    return re.sub("[()-]", "", s)
+    return re.sub("[()-]  ", "", s)
 
 def merge_phones_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
@@ -37,8 +39,16 @@ def test_home_VS_edit_page_contact(app):
 
 def merge_email_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
-                     filter(lambda x: x is not None,[contact.email, contact.email2, contact.email3 ])))
+                            filter(lambda x: x is not None,[contact.email, contact.email2, contact.email3 ])))
 
 
-#self.contact_cache.append(Contact(id = id, abon_first_name = abon_first_name, abon_last_name = abon_last_name, all_phones_from_home_page = all_phones,
-#                                                  address = abon_address, all_email_from_home_page = abon_all_email))
+
+def test_home_VS_bd_page_contact(app, db):
+    contact_from_homepage = sorted(app.contact.get_contacts_list(), key=Contact.id_or_max)
+    contact_from_bd = sorted(db.get_contact_list(), key=Contact.id_or_max)
+    for i in range(len(contact_from_homepage)):
+        assert contact_from_homepage[i].abon_first_name == contact_from_bd[i].abon_first_name
+        assert contact_from_homepage[i].abon_last_name == contact_from_bd[i].abon_last_name
+        assert contact_from_homepage[i].address == contact_from_bd[i].address
+        assert lambda x: re.sub("  ", "", contact_from_homepage[i].all_email_from_home_page) == merge_email_like_on_home_page(contact_from_bd[i])
+        assert lambda x: re.sub("  ", "", contact_from_homepage[i].all_phones_from_home_page) == merge_phones_like_on_home_page(contact_from_bd[i])
