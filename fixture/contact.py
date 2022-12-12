@@ -189,13 +189,15 @@ class ContactHelper:
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
 
-    def delete_contact_from_group(self, group_id):
+    def view_contact_from_group(self, group_id):
         wd = self.app.wd
         self.open_page()
         wd.find_element_by_name("group").find_element_by_css_selector("[value='%s']" % group_id).click()
 
-        contact_id = random.choice(self.get_contacts_list())
-        wd.find_element_by_css_selector("input[value='%s']" % contact_id.id).click()
+
+    def delete_contact_from_group(self, contact_id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % contact_id).click()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         wd.find_element_by_css_selector("div.msgbox")
