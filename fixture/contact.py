@@ -30,8 +30,6 @@ class ContactHelper:
         wd = self.app.wd
         self.open_page()
         wd.find_elements_by_name("selected[]")[index].click()
-    def delete_first_group(self):
-        self.delete_group_by_index(0)
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
@@ -43,6 +41,18 @@ class ContactHelper:
         #time.sleep(3)
         #self.open_page()
         self.contact_cache = None
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        wd.find_element_by_css_selector("div.msgbox")
+        #time.sleep(3)
+        #self.open_page()
+        self.contact_cache = None
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
 
@@ -60,7 +70,7 @@ class ContactHelper:
         # Update
         wd.find_element_by_name("update").click()
         self.open_page()
-        #time.sleep(2)
+        time.sleep(2)
         self.contact_cache = None
 
     def fill_contact_form(self, contact):
@@ -154,7 +164,18 @@ class ContactHelper:
         phone_mobile = re.search("M: (.*)", text).group(1)
         secondaryphone = re.search("P: (.*)", text).group(1)
         return Contact(phone_home = phone_home, phone_work = phone_work, phone_mobile = phone_mobile, secondaryphone = secondaryphone)
-
+    def edit_contact_by_id(self, id, contact):
+        wd = self.app.wd
+        self.open_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath('//a[@href="edit.php?id=%s"]' %int(id)).click()
+        # edit
+        self.fill_contact_form(contact)
+        # Update
+        wd.find_element_by_name("update").click()
+        self.open_page()
+        #time.sleep(2)
+        self.contact_cache = None
     def add_contact_in_group(self, contact_id, group_id):
         wd = self.app.wd
         self.open_page()

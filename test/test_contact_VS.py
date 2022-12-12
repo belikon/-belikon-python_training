@@ -47,7 +47,7 @@ def test_home_VS_bd_page_contact(app, db):
     contact_from_homepage = sorted(app.contact.get_contacts_list(), key=Contact.id_or_max)
     contact_from_bd = sorted(db.get_contact_list(), key=Contact.id_or_max)
     for i in range(len(contact_from_homepage)):
-        assert contact_from_homepage[i].abon_first_name == contact_from_bd[i].abon_first_name
+        assert lambda x: re.sub("  ", "",contact_from_homepage[i].abon_first_name) == contact_from_bd[i].abon_first_name
         assert contact_from_homepage[i].abon_last_name == contact_from_bd[i].abon_last_name
         assert contact_from_homepage[i].address == contact_from_bd[i].address
         assert lambda x: re.sub("  ", "", contact_from_homepage[i].all_email_from_home_page) == merge_email_like_on_home_page(contact_from_bd[i])
