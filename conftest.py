@@ -4,7 +4,7 @@ import pytest
 import json
 import os.path
 import importlib
-import jsonpickle
+#import jsonpickle
 from fixture.db import DbFixture
 
 fixture = None
