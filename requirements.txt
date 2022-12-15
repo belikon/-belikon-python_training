@@ -1,0 +1,6 @@
+pytest
+pytest_bdd
+seleniun
+pony
+pymysql
+mysql-connector-python-rf
