@@ -100,6 +100,7 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(test)
 
+
     def count(self):
         wd = self.app.wd
         self.open_page()

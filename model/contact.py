@@ -40,4 +40,6 @@ class Contact:
 
 
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and self.abon_first_name == other.abon_first_name and self.abon_last_name == other.abon_last_name
+        return (self.id is None or other.id is None or self.id == other.id) and \
+               (self.abon_first_name is None or other.abon_first_name is None or self.abon_first_name == other.abon_first_name) and \
+               (self.abon_last_name is None or other.abon_last_name is None or self.abon_last_name == other.abon_last_name)
