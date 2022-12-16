@@ -183,6 +183,7 @@ class ContactHelper:
         self.select_contact_by_id(contact_id)
         wd.find_element_by_name("to_group").find_element_by_css_selector("[value='%s']" % group_id)
         wd.find_element_by_name("add").click()
+        self.contact_cache = None
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
