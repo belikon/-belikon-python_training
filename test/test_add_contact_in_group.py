@@ -20,6 +20,7 @@ def test_add_contacts_to_groups(app, orm, db):
     contact_not_in_group = orm.get_contacts_not_in_group(group)
     if len(contact_not_in_group) == 0:
         app.contact.create(contact)
+        contact_not_in_group = orm.get_contacts_not_in_group(group)
     contact = random.choice(contact_not_in_group)
     app.contact.add_contact_in_group(contact.id, group.id)
     new_group_list = orm.get_contacts_in_group(group)
